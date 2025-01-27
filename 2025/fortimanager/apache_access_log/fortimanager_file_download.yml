@@ -1,0 +1,22 @@
+title: FortiManager File Download
+id: 3843ccf3-75c2-49b7-83d1-17b5d3b4967d
+status: experimental
+description: Download of a file on FortiManager
+license: DRL-1.1
+author: Synacktiv, Maxence Fossat [@cybiosity]
+date: 2025-01-27
+modified: 2025-01-27
+tags:
+    - tlp.clear
+    - pap.clear
+logsource:
+    product: apache
+    service: access
+    definition: Apache access logs from FortiManager
+detection:
+    selection:
+        cs-method: 'GET'
+        cs-uri-stem: '/flatui/api/gui/download'
+        sc-status: 200
+    condition: selection
+level: informational

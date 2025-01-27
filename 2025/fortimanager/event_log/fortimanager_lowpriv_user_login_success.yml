@@ -1,0 +1,30 @@
+title: FortiManager Low-privilege User Login Success
+id: be1e0ec6-9cf8-49ba-aec0-fe380c74a23b
+status: experimental
+description: Successful login from a low-privilege user to FortiManager
+license: DRL-1.1
+author: Synacktiv, Maxence Fossat [@cybiosity]
+date: 2025-01-27
+modified: 2025-01-27
+tags:
+    - tlp.clear
+    - pap.clear
+logsource:
+    category: firewall
+    product: fortimanager
+    service: event
+    definition: FortiManager Event Log needs to be collected
+detection:
+    selection:
+        desc: 'User login/logout successful'
+        operation: 'login'
+    filter_user:
+        user:
+            - 'admin'
+    filter_profile:
+        adminprof:
+            - 'Super_User'
+    condition: selection and not 1 of filter_*
+falsepositives:
+    - High-privilege accounts and/or profiles not in filter
+level: informational

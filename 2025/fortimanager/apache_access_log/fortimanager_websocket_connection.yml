@@ -1,0 +1,22 @@
+title: FortiManager WebSocket Connection
+id: c8bb72aa-6c3f-4c3c-8fa4-8a5ca9cb539a
+status: experimental
+description: A WebSocket connection successfully opened on FortiManager
+license: DRL-1.1
+author: Synacktiv, Maxence Fossat [@cybiosity]
+date: 2025-01-27
+modified: 2025-01-27
+tags:
+    - tlp.clear
+    - pap.clear
+logsource:
+    product: apache
+    service: access
+    definition: Apache access logs from FortiManager
+detection:
+    selection:
+        cs-method: 'GET'
+        cs-uri-stem: '/ws3'
+        sc-status: 101
+    condition: selection
+level: informational

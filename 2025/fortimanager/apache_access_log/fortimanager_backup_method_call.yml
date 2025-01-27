@@ -1,0 +1,26 @@
+title: FortiManager Backup Method Call
+id: 47f9e063-3cc4-4063-905d-f9f4e8022b85
+status: experimental
+description: Call to a backup method through the FlatUI proxy of FortiManager
+license: DRL-1.1
+author: Synacktiv, Maxence Fossat [@cybiosity]
+date: 2025-01-27
+modified: 2025-01-27
+tags:
+    - tlp.clear
+    - pap.clear
+logsource:
+    product: apache
+    service: access
+    definition: Apache access logs from FortiManager
+detection:
+    selection:
+        cs-method: 'GET'
+        cs-uri-stem: '/cgi-bin/module/flatui_proxy'
+        cs-uri-query|contains|all:
+            - 'req={'
+            - '%22url%22:%22/gui/sys/db%22'
+            - '%22method%22:%22backup%22'
+        sc-status: 200
+    condition: selection
+level: low

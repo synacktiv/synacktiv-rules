@@ -1,0 +1,27 @@
+title: FortiManager Backup Success From Non-admin User
+id: f9ad0b85-671b-4d1f-aa23-7aa5ff8f9ed1
+status: experimental
+description: Successful system configuration backup of FortiManager from a non-admin user
+license: DRL-1.1
+author: Synacktiv, Maxence Fossat [@cybiosity]
+date: 2025-01-27
+modified: 2025-01-27
+tags:
+    - tlp.clear
+    - pap.clear
+logsource:
+    category: firewall
+    product: fortimanager
+    service: event
+    definition: FortiManager Event Log needs to be collected
+detection:
+    selection:
+        operation: 'system backup'
+        msg|contains: 'Backup all settings succeed'
+    filter:
+        user:
+            - 'admin'
+    condition: selection and not filter
+falsepositives:
+    - Admin accounts not in filter
+level: low

@@ -1,0 +1,23 @@
+title: FortiManager SSH Web Console Connection
+id: 7a51b629-10b7-430d-a1d2-3fd0afc11937
+status: experimental
+description: SSH web console connection request via WebSocket on FortiManager
+license: DRL-1.1
+author: Synacktiv, Maxence Fossat [@cybiosity]
+date: 2025-02-03
+modified: 2025-02-03
+tags:
+    - tlp.clear
+    - pap.clear
+logsource:
+    category: firewall
+    product: fortimanager
+    service: websocket
+    definition: FortiManager WebSocket logs need to be collected in full (un-truncated) form
+detection:
+    selection:
+        message|contains|all:
+            - '"method":"console"'
+            - '"action":"connect"'
+    condition: selection
+level: low

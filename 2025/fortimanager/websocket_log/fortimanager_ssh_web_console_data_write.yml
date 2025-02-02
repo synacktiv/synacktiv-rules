@@ -1,0 +1,23 @@
+title: FortiManager SSH Web Console Data Write
+id: 7d57d500-4320-4bdd-832c-62e2997921d0
+status: experimental
+description: SSH web console data write via WebSocket on FortiManager
+license: DRL-1.1
+author: Synacktiv, Maxence Fossat [@cybiosity]
+date: 2025-02-03
+modified: 2025-02-03
+tags:
+    - tlp.clear
+    - pap.clear
+logsource:
+    category: firewall
+    product: fortimanager
+    service: websocket
+    definition: FortiManager WebSocket logs need to be collected in full (un-truncated) form
+detection:
+    selection:
+        message|contains|all:
+            - '"method":"console"'
+            - '"action":"xmit"'
+    condition: selection
+level: low

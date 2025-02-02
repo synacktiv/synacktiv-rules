@@ -1,10 +1,10 @@
-title: FortiManager File Download
-id: 3843ccf3-75c2-49b7-83d1-17b5d3b4967d
+title: FortiManager FlatUI Login Success
+id: f4f2111e-ff70-4b1b-a452-fce8632df20e
 status: experimental
-description: Download of a file on FortiManager
+description: Login Success via FlatUI on FortiManager
 license: DRL-1.1
 author: Synacktiv, Maxence Fossat [@cybiosity]
-date: 2025-01-27
+date: 2025-02-03
 modified: 2025-02-03
 tags:
     - tlp.clear
@@ -15,8 +15,8 @@ logsource:
     definition: Apache access logs from FortiManager
 detection:
     selection:
-        cs-method: 'GET'
-        cs-uri-stem|startswith: '/flatui/api/gui/download'
+        cs-method: 'POST'
+        cs-uri-stem|startswith: '/cgi-bin/module/flatui_auth'
         sc-status: 200
     condition: selection
 level: informational

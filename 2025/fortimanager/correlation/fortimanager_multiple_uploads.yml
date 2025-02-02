@@ -1,0 +1,19 @@
+title: FortiManager Multiple Uploads
+id: f2e3749a-7d26-4c86-bec1-1da24cad99f6
+status: experimental
+description: Multiple uploads to FortiManager in close temporality
+license: DRL-1.1
+author: Synacktiv, Maxence Fossat [@cybiosity]
+date: 2025-02-03
+modified: 2025-02-03
+tags:
+    - tlp.clear
+    - pap.clear
+correlation:
+    type: event_count
+    rules:
+        - f182e2dc-3557-4cec-ac89-c437ec79b2a6  # FortiManager FlatUI Upload Success
+    timespan: 30s
+    condition:
+        gte: 3
+level: low

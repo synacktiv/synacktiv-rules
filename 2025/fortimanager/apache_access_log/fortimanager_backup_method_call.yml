@@ -5,7 +5,7 @@ description: Call to a backup method through the FlatUI proxy of FortiManager
 license: DRL-1.1
 author: Synacktiv, Maxence Fossat [@cybiosity]
 date: 2025-01-27
-modified: 2025-01-27
+modified: 2025-02-03
 tags:
     - tlp.clear
     - pap.clear
@@ -16,7 +16,7 @@ logsource:
 detection:
     selection:
         cs-method: 'GET'
-        cs-uri-stem: '/cgi-bin/module/flatui_proxy'
+        cs-uri-stem|startswith: '/cgi-bin/module/flatui_proxy'
         cs-uri-query|contains|all:
             - 'req={'
             - '%22url%22:%22/gui/sys/db%22'

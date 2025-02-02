@@ -5,7 +5,7 @@ description: A WebSocket connection successfully opened on FortiManager
 license: DRL-1.1
 author: Synacktiv, Maxence Fossat [@cybiosity]
 date: 2025-01-27
-modified: 2025-01-27
+modified: 2025-02-03
 tags:
     - tlp.clear
     - pap.clear
@@ -16,7 +16,7 @@ logsource:
 detection:
     selection:
         cs-method: 'GET'
-        cs-uri-stem: '/ws3'
+        cs-uri-stem|startswith: '/ws3'
         sc-status: 101
     condition: selection
 level: informational

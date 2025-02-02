@@ -1,10 +1,10 @@
-title: FortiManager File Download
-id: 3843ccf3-75c2-49b7-83d1-17b5d3b4967d
+title: FortiManager Logout
+id: 99a0e638-9046-49a1-b032-124051a1bbe7
 status: experimental
-description: Download of a file on FortiManager
+description: User logout from FortiManager
 license: DRL-1.1
 author: Synacktiv, Maxence Fossat [@cybiosity]
-date: 2025-01-27
+date: 2025-02-03
 modified: 2025-02-03
 tags:
     - tlp.clear
@@ -16,7 +16,8 @@ logsource:
 detection:
     selection:
         cs-method: 'GET'
-        cs-uri-stem|startswith: '/flatui/api/gui/download'
+        cs-uri-stem|startswith: '/p/logout'
+        cs-uri-query|contains: 'host='
         sc-status: 200
     condition: selection
 level: informational

@@ -1,0 +1,48 @@
+title: atexec-pro - Suspicious PowerShell process creation
+id: 2ca5c77a-1bc6-498e-a946-7a126d4e8db6
+status: experimental
+description: Suspicious PowerShell process creation where command line contents are related to execution of atexec-pro remote execution tool
+license: DRL-1.1
+references:
+    - https://www.synacktiv.com/en/publications/open-source-toolset-of-an-ivanti-csa-attacker
+author: Synacktiv, Maxence Fossat [@cybiosity]
+date: 2025-05-12
+modified: 2025-05-12
+tags:
+    - attack.execution
+    - attack.t1053
+    - tlp.clear
+    - pap.clear
+logsource:
+    product: windows
+    category: process_creation
+    definition: Command line must be logged
+detection:
+    selection_base:
+        CommandLine|base64offset|contains|all:
+            - '[System.Convert]::ToBase64String('
+            - '[System.Convert]::FromBase64String('
+            - 'New-Object System.Security.Cryptography.AesManaged'
+            - '[System.Security.Cryptography.CipherMode]::CBC'
+            - '.CreateEncryptor()'
+            - '.CreateDecryptor()'
+            - 'New-Object -ComObject Schedule.Service'
+            - '.GetTask('
+            - '.RegistrationInfo.Description'
+            - '.RegisterTaskDefinition('
+    selection_script_cmd:
+        CommandLine|base64offset|contains: 'iex'
+    selection_script_upload:
+        CommandLine|base64offset|contains: 'Set-Content -Path '
+    selection_script_download:
+        CommandLine|base64offset|contains: 'Get-Content -Path '
+    selection_script_net:
+        CommandLine|base64offset|contains|all:
+            - '[System.Reflection.Assembly]::Load('
+            - 'New-Object System.IO.StreamWriter'
+            - '.Invoke('
+            - 'New-Object System.IO.StreamReader('
+    condition: selection_base and 1 of selection_script*
+falsepositives:
+    - Legitimate scripts using these cmdlets
+level: high

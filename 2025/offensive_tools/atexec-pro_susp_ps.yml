@@ -1,0 +1,49 @@
+title: atexec-pro - Suspicious PowerShell script
+id: 8da0570e-adc3-4d2d-8acf-07f8cde5db3a
+status: experimental
+description: Suspicious PowerShell script contents related to execution of atexec-pro remote execution tool
+license: DRL-1.1
+references:
+    - https://www.synacktiv.com/en/publications/open-source-toolset-of-an-ivanti-csa-attacker
+author: Synacktiv, Maxence Fossat [@cybiosity]
+date: 2025-05-12
+modified: 2025-05-12
+tags:
+    - attack.execution
+    - attack.t1053
+    - tlp.clear
+    - pap.clear
+logsource:
+    product: windows
+    category: ps_script
+    definition: Script Block Logging must be enabled
+detection:
+    selection_base:
+        EventID: 4104
+        ScriptBlockText|contains|all:
+            - '[System.Convert]::ToBase64String('
+            - '[System.Convert]::FromBase64String('
+            - 'New-Object System.Security.Cryptography.AesManaged'
+            - '[System.Security.Cryptography.CipherMode]::CBC'
+            - '.CreateEncryptor()'
+            - '.CreateDecryptor()'
+            - 'New-Object -ComObject Schedule.Service'
+            - '.GetTask('
+            - '.RegistrationInfo.Description'
+            - '.RegisterTaskDefinition('
+    selection_script_cmd:
+        ScriptBlockText|contains: 'iex'
+    selection_script_upload:
+        ScriptBlockText|contains: 'Set-Content -Path '
+    selection_script_download:
+        ScriptBlockText|contains: 'Get-Content -Path '
+    selection_script_net:
+        ScriptBlockText|contains|all:
+            - '[System.Reflection.Assembly]::Load('
+            - 'New-Object System.IO.StreamWriter'
+            - '.Invoke('
+            - 'New-Object System.IO.StreamReader('
+    condition: selection_base and 1 of selection_script*
+falsepositives:
+    - Legitimate scripts using these cmdlets
+level: high

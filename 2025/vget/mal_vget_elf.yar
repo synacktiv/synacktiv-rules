@@ -14,7 +14,8 @@ rule MAL_vGet_ELF_Downloader_Rust_Oct25 {
     $lc_pdfuser = "cosmanking"  fullword ascii
     $lc_local = "127.0.0.1" fullword ascii
   condition:
-    uint32(0) == 0x464c457f and elf.type == elf.ET_DYN and filesize > 500KB and filesize < 3MB 
+    uint32(0) == 0x464c457f and filesize > 500KB and filesize < 3MB 
+    and elf.type == elf.ET_DYN 
     and all of ($hc*)
     and 1 of ($lc*)
 }

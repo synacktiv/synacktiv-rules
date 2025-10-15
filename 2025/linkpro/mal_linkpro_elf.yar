@@ -86,7 +86,7 @@ rule MAL_LinkPro_LdPreload_ELF_SO_Oct25 {
     $file_persist = ".system" fullword ascii
     $file_cron = "sshids" fullword ascii
   condition:
-    uint32(0) == 0x464c457f and filesize < 500Ko and elf.type == elf.ET_DYN
+    uint32(0) == 0x464c457f and filesize < 500KB and elf.type == elf.ET_DYN
     and $linkpro
     and 2 of ($hook*)
     and 2 of ($file*)
@@ -108,7 +108,7 @@ rule MAL_LinkPro_arpdiag_ELF_KO_Oct25 {
     $hide_entry = "hide_port_init" fullword ascii
     $hide_exit = "hide_port_exit" fullword ascii
   condition:
-    uint32(0) == 0x464c457f and filesize < 2Mo and elf.type == elf.ET_REL
+    uint32(0) == 0x464c457f and filesize < 2MB and elf.type == elf.ET_REL
     and $ftrace
     and 2 of ($hook*) 
     and 1 of ($hide*)
